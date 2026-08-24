@@ -1,0 +1,17 @@
+import { chromium } from 'playwright'
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' })
+const page = await browser.newPage({ viewport: { width: 1180, height: 900 } })
+const errors = []
+page.on('pageerror', (e) => errors.push('pageerror: ' + e.message))
+page.on('console', (m) => { if (m.type() === 'error') errors.push('console: ' + m.text()) })
+await page.goto('file://' + process.cwd() + '/Test-DGT.html')
+await page.waitForSelector('.hero', { timeout: 20000 })
+const total = await page.textContent('.kpi + .kpi b')
+await page.click('.action.primary')
+await page.waitForSelector('.opt')
+const w = await page.evaluate(() => document.querySelector('img.photo')?.naturalWidth || 0)
+await page.click('.opt')
+await page.waitForSelector('.verdict')
+await page.screenshot({ path: '/tmp/shots/07-offline.png', fullPage: true })
+console.log('offline: photo width', w, '| errors:', errors.length ? errors.slice(0, 5) : 'none')
+await browser.close()

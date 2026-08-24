@@ -1,0 +1,25 @@
+{
+  "name": "dgt-teorico-trainer",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Mobile-first DGT permiso B theory trainer: 2,947 official questions with photos, bilingual explanations, section badges and mock exams. Works offline.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:offline": "vite build --config vite.offline.config.js && node scripts/build-offline.mjs",
+    "test": "node scripts/unit.mjs",
+    "test:e2e": "npm run build && node scripts/e2e.mjs",
+    "test:file": "npm run build:offline && node scripts/file-check.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.49.1",
+    "vite": "^5.4.11"
+  }
+}
